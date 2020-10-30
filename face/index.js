@@ -1,0 +1,66 @@
+const svg = d3.select('svg');
+
+const width = +svg.attr('width');
+const height = +svg.attr('height');
+
+const g = svg
+	.append('g')
+		.attr('transform', `translate(${width / 2}, ${height / 2})`);
+
+const circle = g
+	.append('circle')
+		.attr('r', height / 2)
+		.attr('fill', 'yellow')
+		.attr('stroke', 'black');
+
+const eyeSpacing = 100;
+const eyeYOffset = -70;
+const eyeRadius = 40;
+const eyebrowWidth = 50;
+const eyebrowHeight = 15;
+const eyebrowYOffset = -70;
+
+const eyesGroup = g
+	.append('g')
+		.attr('transform', `translate(0, ${eyeYOffset})`);
+
+const eyebrowsGroup = eyesGroup
+	.append('g')
+		.attr('transform', `translate(0, ${eyebrowYOffset})`);
+
+eyebrowsGroup
+	.transition().duration(2000)
+		.attr('transform', `translate(0, ${eyebrowYOffset - 50})`)
+	.transition().duration(2000)
+		.attr('transform', `translate(0, ${eyebrowYOffset})`);
+
+const leftEye = eyesGroup
+	.append('circle')
+		.attr('r', eyeRadius)
+		.attr('cx', -eyeSpacing);
+
+const rightEye = eyesGroup
+	.append('circle')
+		.attr('r', eyeRadius)
+		.attr('cx', eyeSpacing);
+
+const leftEyebrow = eyebrowsGroup
+	.append('rect')
+		.attr('x', -eyeSpacing - eyebrowWidth / 2)
+		.attr('width', eyebrowWidth)
+		.attr('height', eyebrowHeight);
+
+const rightEyebrow = eyebrowsGroup
+	.append('rect')
+		.attr('x', eyeSpacing - eyebrowWidth / 2)
+		.attr('width', eyebrowWidth)
+		.attr('height', eyebrowHeight);
+
+const arc = d3.arc();
+
+const mouth = g
+	.append('path')
+		.attr('d', arc.innerRadius(150)
+			.outerRadius(170)
+			.startAngle(Math.PI / 2)
+			.endAngle(Math.PI * 3 / 2));
